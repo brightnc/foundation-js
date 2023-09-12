@@ -6,4 +6,10 @@ function greeting(name) {
   }
 }
 
-greeting(10);
+//greeting(10);
+
+const a = "Helloworld";
+
+for (let i = 0; i < a.length; i++) {
+  console.log(a[i]);
+}

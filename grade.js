@@ -1,5 +1,5 @@
 function grade(score) {
-  if (typeof score === "number") {
+  if (isNumber(score)) {
     if (score > 100 || score < 0) {
       console.log("Score must not be less than 0 or more than 100 !!!");
     } else if (score >= 80) {
@@ -16,6 +16,10 @@ function grade(score) {
   } else {
     console.log("score must be number. !!!");
   }
+}
+
+function isNumber(input) {
+  return input.constructor === Number;
 }
 
 grade(101);
