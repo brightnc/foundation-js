@@ -34,7 +34,7 @@ const data = [
     job: "software engineer",
   },
   {
-    name: "Johny",
+    name: "Johnny",
     age: 26,
     job: "web designer",
   },
