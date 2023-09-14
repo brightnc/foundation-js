@@ -30,7 +30,7 @@ function reverseLoopArray() {
 
 //loopThroughArray(arr);
 
-// Break keyword
+// * Break keyword
 function breakKeyword(array) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === "London") {
