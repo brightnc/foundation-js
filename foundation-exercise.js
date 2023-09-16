@@ -1,5 +1,5 @@
 //* ---------------------------------------------------------------------------------
-// TODO: medium : 3 // challenges : 1 , 2, 3
+// TODO: medium : 3 // challenges : 1, 2, 3, 4, 5
 //* ---------------------------------------------------------------------------------
 
 //* 1. mapRevertSign(arr) takes in an array of numbers, and returns a new array of numbers containing opposite signs of the original array.
@@ -548,7 +548,36 @@ const prime = (n) => {
 // TODO: **************************************************************
 //* ---------------------------------------------------------------------------------
 
-//* 2
+//* 2. mode(arr) returns the statistical mode from the dataset arr (represented as an array).
+
+//* A dataset's mode is the value which appears most frequently in a dataset. If none is found, or if there are no clear winner, mode(arr) returns null
+
+//* Hint: It can be done in 2 ways: the first is by using a HashMap, the second is by using an Object. You may need to research how to use HashMap in JavaScript.
+
+const mode = (array) => {
+  const map = {};
+  let temp = null;
+  let result = null;
+  const len = array.length;
+  for (let i = 0; i < len; i++) {
+    if (!map[array[i]]) {
+      map[array[i]] = 0;
+    }
+    map[array[i]]++;
+  }
+  for (const [key, value] of Object.entries(map)) {
+    if (value > temp) {
+      temp = value;
+      result = key;
+    }
+  }
+  return result;
+};
+
+console.log(mode([1, 2, 1, 4, 5, 6, 2, 1])); // 1
+
+// const testMap = { num: 10 };
+// console.log(testMap["num"]);
 
 //* ---------------------------------------------------------------------------------
 // TODO: **************************************************************
@@ -563,3 +592,21 @@ const prime = (n) => {
 //  [1, 0, 1, 0, 0, 0, 0, 0], // => the 1st row of pixels of imageBytes
 //  [1, 0, 1, 0, 1, 1, 1, 1], // => the 2nd row of pixels of imageBytes
 // ]
+
+//* ---------------------------------------------------------------------------------
+// TODO: **************************************************************
+//* ---------------------------------------------------------------------------------
+
+//* 4. Related to transpose(arr, w, h) above transposable(arr, w, h) returns a boolean,
+//* indicating whether the array arr could be transposed with w and h. It is considered transposable
+//* if the resulting 2D array can form a rectangle (all rows have uniform length).
+
+//* ---------------------------------------------------------------------------------
+// TODO: **************************************************************
+//* ---------------------------------------------------------------------------------
+
+//* 5. markdownToHTML(md) takes in a Markdown string md and returns a HTML string parsed from md.
+
+//* You can just parse the header tags (<h1>, <h2>, and so on) and the paragraph tag <p> and ignore the rest of Markdown standard.
+
+//* Hint: JavaScript strings have method s.startsWith(p) which returns a boolean indicating whether s is prefixed with p
