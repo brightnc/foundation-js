@@ -1,5 +1,5 @@
 //* ---------------------------------------------------------------------------------
-// TODO: easy : 9, 20 // medium : 3 // challenges : 1 , 2, 3
+// TODO: medium : 3 // challenges : 1 , 2, 3
 //* ---------------------------------------------------------------------------------
 
 //* 1. mapRevertSign(arr) takes in an array of numbers, and returns a new array of numbers containing opposite signs of the original array.
@@ -139,15 +139,19 @@ const fizzBuzz = (n) => {
 
 //fizzBuzz(20);
 
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
-
 //* 9. gcd(a, b) returns greatest common divisor (GCD / หรม.) between the pair a, b
 
-// const gcd = (a, b) => {
+const gcd = (a, b) => {
+  if (b === 0) {
+    return a;
+  }
 
-// }
+  return gcd(b, a % b);
+};
+
+// console.log(gcd(10, 15)); // 5
+// console.log(gcd(18, 12)); // 6
+// console.log(gcd(3, 2)); // 1
 
 //* 10. filterLt(n, arr) takes in an a number n and an array of numbers arr,
 //* and returns a new array containing all elements of arr that is lesser than (lt) n.
@@ -346,27 +350,25 @@ const mapMean = (array) => {
 
 // console.log(mapMean(array)); // [2, 150, 15]
 
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
-
 //* 20. fib(n) prints the Fibonacci series up to n terms.
 
 //* The series look like this: 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
 
 const fib = (n) => {
-  //   if (n === 0) {
-  //     return 0;
-  //   }
-  //   if (n === 1) {
-  //     return 1;
-  //   }
+  // if (n <= 2) {
+  //   return 1;
+  // }
 
-  if (n <= 2) {
-    return 1;
+  // return fib(n - 1) + fib(n - 2);
+
+  const fibArray = [0, 1];
+  if (n < 1) {
+    return 0;
   }
-
-  return fib(n - 1) + fib(n - 2);
+  for (let i = 2; i <= n; i++) {
+    fibArray.push(fibArray[i - 2] + fibArray[i - 1]);
+  }
+  return fibArray;
 };
 
 // console.log(fib(10));
