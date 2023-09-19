@@ -1,7 +1,3 @@
-//* ---------------------------------------------------------------------------------
-// TODO: medium : 3 // challenges : 1, 2, 3, 4, 5
-//* ---------------------------------------------------------------------------------
-
 //* 1. mapRevertSign(arr) takes in an array of numbers, and returns a new array of numbers containing opposite signs of the original array.
 //const arr = [1, -4, 2, 0];
 
@@ -464,28 +460,48 @@ const prime = (n) => {
 
 // console.log(prime(10));
 
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
-
 //* 3. drawDown(chart) returns the biggest downward movement within the chart points
 
 //* Where chart is points in a chart, represented as an array of numbers: [110, 105, 95, 9, 80, 17, 120, 115, 11]
 
 //* Hint: you must keep states
 
-// const chart = [110, 105, 95, 9, 80, 17, 120, 115, 11];
+const chart = [115, 105, 95, 9, 80, 17, 120, 115, 11];
 
-// const drawDown = (chart) => {
-//   const temp = [];
-//   for (let i = 0; i < chart.length; i++) {
-//     temp.push(chart[i] - chart[i + 1]);
-//   }
-//   30;
-//   console.log(temp);
-// };
+const drawDown = (chart) => {
+  let max = 0;
+  let low = 0;
+  let diff = 0;
 
-// drawDown(chart); // 109
+  for (let i = 0; i < chart.length; i++) {
+    let isNewHigh = false;
+    if (i === 0) {
+      max = chart[i];
+      low = chart[i];
+      continue;
+    }
+
+    if (chart[i] > max) {
+      max = chart[i];
+      isNewHigh = true;
+      low = max;
+    }
+    if (chart[i] < low) {
+      low = chart[i];
+    }
+    if (!isNewHigh) {
+      let newDiff = max - low;
+
+      if (newDiff > diff) {
+        diff = newDiff;
+      }
+    }
+  }
+
+  return diff;
+};
+
+// console.log(drawDown(chart)); // 109
 
 /*
 	|--------------------------------------------------------------------------
@@ -493,10 +509,6 @@ const prime = (n) => {
 	|--------------------------------------------------------------------------
 	|
 */
-
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
 
 //* 1. summarize(text, trail, len) returns the shortest preview of text.
 
@@ -510,43 +522,38 @@ const prime = (n) => {
 
 //* If len is smaller than 3, and text does not fit len, summarize returns an empty string "".
 
-// const articleCleverse =
-//   "I am from Cleverse Academy! Today, I’m here to teach you some JavaScript programming";
+const articleCleverse =
+  "I am from Cleverse Academy! Today, I’m here to teach you some JavaScript programming";
 
-// const summarize = (text, trail, len) => {
-//   let result = "";
-//   if (text.length <= len) {
-//     return text;
-//   }
-//   if (len < 3 && text.length > len) {
-//     return "";
-//   }
+const summarize = (text, trail, len) => {
+  if (len < 3) {
+    return "";
+  }
+  const textArray = text.split(" ");
+  let length = len - trail.length;
+  const result = [];
+  for (let i = 0; i < textArray.length; i++) {
+    if (textArray[i].length < length) {
+      length = length - textArray[i].length;
+      result.push(textArray[i]);
+    }
+    if (textArray[i].length > length) {
+      break;
+    }
+  }
+  result.push(trail);
+  const resultText = result.join(" ");
+  return resultText;
+};
 
-//   const textArray = text.split(" ");
-//   for (let i = 0; i < textArray.length; i++) {
-//     if (result.length > len) {
-//       break;
-//     }
-//     for (let j = 0; j < textArray[i].length; j++) {
-//       result += textArray[i][j];
-//     }
-//     result += " ";
-//   }
-//   console.log(result);
-// };
+// console.log(summarize(articleCleverse, " ...", 30)); // "I am from Cleverse Academy! ..."
 
-// summarize(articleCleverse, " ...", 30); // "I am from Cleverse Academy! ..."
+const articleFoo = "Good morning ladies and gentlemen";
 
-// const articleFoo = "Good morning ladies and gentlemen";
-
-// summarize(articleFoo, " ...", 2); // ""
-// summarize(articleFoo, " ...", 10); // "Good ..."
-// summarize(articleFoo, " ...", 20); // "Good morning ..."
-// summarize(articleFoo, " ...", 25); // "Good morning ladies ..."
-
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
+// console.log(summarize(articleFoo, " ...", 2)); // ""
+// console.log(summarize(articleFoo, " ...", 10)); // "Good ..."
+// console.log(summarize(articleFoo, " ...", 20)); // "Good morning ..."
+// console.log(summarize(articleFoo, " ...", 25)); //* "Good morning ladies ..." "Good morning ladies and ..."
 
 //* 2. mode(arr) returns the statistical mode from the dataset arr (represented as an array).
 
@@ -556,16 +563,20 @@ const prime = (n) => {
 
 const mode = (array) => {
   const map = {};
-  let temp = null;
+  let temp = 0;
   let result = null;
   const len = array.length;
   for (let i = 0; i < len; i++) {
     if (!map[array[i]]) {
-      map[array[i]] = 0;
+      map[array[i]] = 1;
     }
     map[array[i]]++;
   }
   for (const [key, value] of Object.entries(map)) {
+    // there are no clear winner, mode(arr) returns null
+    if (value !== 0 && value === temp) {
+      return null;
+    }
     if (value > temp) {
       temp = value;
       result = key;
@@ -574,39 +585,106 @@ const mode = (array) => {
   return result;
 };
 
-console.log(mode([1, 2, 1, 4, 5, 6, 2, 1])); // 1
+// console.log(mode([1, 2, 1, 4, 5, 6, 2, 1])); // 1
+// console.log(mode([1, 2, 1, 4, 5, 6, 2, 1, 2, 2, 2])); //2
+// console.log(mode([1, 2, 1, 1, 2, 2, 2, 4, 5, 6, 1])); // null
+// console.log(mode([2, 5, 2, 4, 5])); // null
 
 // const testMap = { num: 10 };
 // console.log(testMap["num"]);
 
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
+//* 2.1 mapMode(arr) takes in an array of arrays, and returns an array of numbers whose element at index i maps to the statistical mode of arr[i].
+
+//* You are allowed to use mode(arr) written above.
+
+const mapMode = (array) => {
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    result.push(mode(array[i]));
+  }
+  return result;
+};
+
+const arr = [
+  [1, 2, 3, 1],
+  [100, 200],
+  [10, 20],
+];
+// console.log(mapMode(arr)); // [1, null, null]
+
 //* 3. transpose(bits, w, h) transposes an array bits into arrays of arrays, based on the value of w, h, and to some extent bits.
 
-// const transpose = (bits, w, h) => {};
+const transpose = (bits, w, h) => {
+  const result = [];
+  let count = 0;
+  for (let i = 0; i < h; i++) {
+    const temp = [];
+    for (let j = 0; j < w; j++) {
+      temp.push(bits[count]);
+      count++;
+    }
+    result.push(temp);
+  }
+  return result;
+};
 
-// const imageBytes = [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1];
+const imageBytes = [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1];
 // console.log(transpose(imageBytes, 8, 2));
 // [
-//  [1, 0, 1, 0, 0, 0, 0, 0], // => the 1st row of pixels of imageBytes
-//  [1, 0, 1, 0, 1, 1, 1, 1], // => the 2nd row of pixels of imageBytes
-// ]
-
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
+//   [1, 0, 1, 0, 0, 0, 0, 0], // => the 1st row of pixels of imageBytes
+//   [1, 0, 1, 0, 1, 1, 1, 1], // => the 2nd row of pixels of imageBytes
+// ];
 
 //* 4. Related to transpose(arr, w, h) above transposable(arr, w, h) returns a boolean,
 //* indicating whether the array arr could be transposed with w and h. It is considered transposable
 //* if the resulting 2D array can form a rectangle (all rows have uniform length).
-
-//* ---------------------------------------------------------------------------------
-// TODO: **************************************************************
-//* ---------------------------------------------------------------------------------
+const transposable = (arr, w, h) => {
+  if (arr.length % (w * h) === 0) {
+    return true;
+  }
+  return false;
+};
+const image = [1, 0, 1, 0, 1, 1]; // len = 6
+// console.log(transposable(image, 2, 3)); // true
+// console.log(transposable(image, 6, 1)); // true
+// console.log(transposable(image, 4, 2)); // false
 
 //* 5. markdownToHTML(md) takes in a Markdown string md and returns a HTML string parsed from md.
 
 //* You can just parse the header tags (<h1>, <h2>, and so on) and the paragraph tag <p> and ignore the rest of Markdown standard.
 
 //* Hint: JavaScript strings have method s.startsWith(p) which returns a boolean indicating whether s is prefixed with p
+
+const markdownToHTML = (md) => {
+  const textArray = md.split("\n");
+  const result = [];
+  for (let i = 0; i < textArray.length; i++) {
+    if (textArray[i] === "") {
+      continue;
+    }
+    if (textArray[i].startsWith("# ")) {
+      textArray[i] = textArray[i].replace("# ", "<h1>");
+      textArray[i] += "</h1>";
+      result.push(textArray[i]);
+    } else if (textArray[i].startsWith("## ")) {
+      textArray[i] = textArray[i].replace("## ", "<h2>");
+      textArray[i] += "</h2>";
+      result.push(textArray[i]);
+    } else {
+      textArray[i] = "<p>" + textArray[i] + "</p>";
+      result.push(textArray[i]);
+    }
+  }
+
+  return result.join("\n");
+};
+
+const md = `
+# This is H1
+
+## This is H2
+
+This is a paragraph
+`;
+
+// console.log(markdownToHTML(md));
